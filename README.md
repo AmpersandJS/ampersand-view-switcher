@@ -99,6 +99,11 @@ this.pageSwitcher = new ViewSwitcher(this.pageContainer, {
 
 - 0.0.0 Initial version (prototype stage, beware)
 
+## Credits
+
+Written by [@HenrikJoreteg](http://twitter.com/henrikjoreteg) with inspiration and ideas from [@philip_roberts](http://twitter.com/philip_roberts) and [@wraithgar](http://twitter.com/wraithgar) and [other awesome Yetis](http://andyet.com/team).
+
+
 ## License
 
 MIT
