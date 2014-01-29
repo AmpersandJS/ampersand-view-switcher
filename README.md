@@ -97,7 +97,7 @@ this.pageSwitcher = new ViewSwitcher(this.pageContainer, {
 
 ## Changelog
 
-- 0.0.0 Initial version (prototype stage, beware)
+- 0.0.1 Initial version (prototype stage, beware)
 
 ## Credits
 

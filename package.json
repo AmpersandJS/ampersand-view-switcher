@@ -1,6 +1,6 @@
 {
   "name": "human-view-switcher",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "A utility for swapping out humanjs or backbone views inside an element.",
   "main": "human-view-switcher.js",
   "scripts": {

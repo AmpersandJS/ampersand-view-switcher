@@ -36,10 +36,10 @@ ViewSwitcher.prototype._show = function (view, cb) {
     if (customShow) {
         // async
         if (customShow.length === 3) {
-            this._render(view)
+            this._render(view);
             customShow(view, cb);
         } else {
-            this._render(view)
+            this._render(view);
             customShow(view);
             if (cb) cb();
         }
