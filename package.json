@@ -1,0 +1,25 @@
+{
+  "name": "human-view-switcher",
+  "version": "0.0.0",
+  "description": "A utility for swapping out humanjs or backbone views inside an element.",
+  "main": "human-view-switcher.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/henrikjoreteg/human-view-switcher"
+  },
+  "keywords": [
+    "humanjs",
+    "views",
+    "backbone",
+    "clientside"
+  ],
+  "author": "Henrik Joreteg <henrik@andyet.net>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/henrikjoreteg/human-view-switcher/issues"
+  },
+  "homepage": "https://github.com/henrikjoreteg/human-view-switcher"
+}
