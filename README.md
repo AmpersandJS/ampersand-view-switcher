@@ -33,6 +33,7 @@ Here's an example of how you might use the view switcher to handle page views wi
 
 ```js
 var HumanView = require('human-view');
+var ViewSwitcher = require('human-view-switcher');
 var templates = require('./templates');
 
 module.exports = HumanView.extend({
@@ -93,6 +94,26 @@ this.pageSwitcher = new ViewSwitcher(this.pageContainer, {
     }
 });
 ```
+
+
+## API Reference
+
+### Class: ViewSwitcher(element, [options])
+
+* `element` {Element} The DOM element that should contain the views.
+* `options` {Object} [optinal]
+    * `show` {Function} [optional] A function that gets called when a view is being shown. It's passed the new view, the previous view (if relevant), and a callback. If you name 3 incoming arguments for example `function (newView, oldView, callback) { ... }` the view switcher will wait for you to call the callback before it's considered ready. If you only use one or two like this: `function (newView, oldView) { ... }` it won't wait for you to call a callback.
+    * `hide` {Function} [optional] A function that gets called when a view is being removed. It's passed the old view, the new view (if relevant), and a callback. If you name 3 incoming arguments for example `function (oldView, newView, callback) { ... }` the view switcher will wait for you to call the callback before it's considered ready. If you only use one or two like this: `function (oldView, newView) { ... }` it won't wait for you to call a callback.
+    * `waitForRemove` {Boolean} [default: `false`] Whether or not to wait until your `hide` animation callback gets called before starting your `show` animation.
+
+
+#### Method: .set(viewInstance)
+
+* `viewInstance` {View} The new view to render. 
+
+The instantiated view switcher has this one main method. Simply call it with the new view you wish to show. 
+
+This is most likely going to be an instantiated [human-view](http://docs.humanjavascript.com/#human-view) or Backbone.View, but can be anything that has a `.el` property that represents that view's root element and `.remove()` method that cleans up after itself. In addition if your custom view object has a `.render()` method it will get called before the view is added to the DOM.
 
 
 ## Changelog
