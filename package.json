@@ -1,25 +1,34 @@
 {
-  "name": "human-view-switcher",
+  "name": "ampersand-view-switcher",
+  "description": "A utility for swapping out views inside a container element.",
   "version": "0.0.1",
-  "description": "A utility for swapping out humanjs or backbone views inside an element.",
-  "main": "human-view-switcher.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+  "author": "Henrik Joreteg <henrik@andyet.net>",
+  "bugs": {
+    "url": "https://github.com/ampersandjs/ampersand-view-switcher/issues"
   },
-  "repository": {
-    "type": "git",
-    "url": "git://github.com/henrikjoreteg/human-view-switcher"
+  "devDependencies": {
+    "tape": "2.x.x",
+    "precommit-hook": "0.x.x",
+    "ampersand-view": "",
+    "run-browser": ""
   },
+  "homepage": "https://github.com/ampersandjs/ampersand-view-switcher",
   "keywords": [
-    "humanjs",
+    "ampersand",
     "views",
     "backbone",
     "clientside"
   ],
-  "author": "Henrik Joreteg <henrik@andyet.net>",
   "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/henrikjoreteg/human-view-switcher/issues"
+  "main": "ampersand-view-switcher.js",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/ampersandjs/ampersand-view-switcher"
   },
-  "homepage": "https://github.com/henrikjoreteg/human-view-switcher"
+  "scripts": {
+    "start": "run-browser test/main.js"
+  },
+  "dependencies": {
+    "precommit-hook": "~0.3.10"
+  }
 }

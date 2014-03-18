@@ -1,6 +1,6 @@
-# human-view-switcher
+# ampersand-view-switcher
 
-This module does one thing: *it helps you swap out views inside of an element*. It's compatible with human-view, backbone views and any view that has an `.el`, `.render` and `.remove()`
+This module does one thing: *it helps you swap out views inside of an element*. It's compatible with ampersand-view, backbone views and any view that has an `.el`, `.render` and `.remove()`
 
 What might you do with it?
 - build a page container for your app.
@@ -22,18 +22,18 @@ What it does
 ## installing
 
 ```
-npm install human-view-switcher
+npm install ampersand-view-switcher
 ```
 
 ## example usage
 
-Here's an example of how you might use the view switcher to handle page views within your humanjs app.
+Here's an example of how you might use the view switcher to handle page views within your ampersand app.
 
 `mainview.js`
 
 ```js
-var HumanView = require('human-view');
-var ViewSwitcher = require('human-view-switcher');
+var HumanView = require('ampersand-view');
+var ViewSwitcher = require('ampersand-view-switcher');
 var templates = require('./templates');
 
 module.exports = HumanView.extend({
@@ -113,7 +113,7 @@ this.pageSwitcher = new ViewSwitcher(this.pageContainer, {
 
 The instantiated view switcher has this one main method. Simply call it with the new view you wish to show. 
 
-This is most likely going to be an instantiated [human-view](http://docs.humanjavascript.com/#human-view) or Backbone.View, but can be anything that has a `.el` property that represents that view's root element and `.remove()` method that cleans up after itself. In addition if your custom view object has a `.render()` method it will get called before the view is added to the DOM.
+This is most likely going to be an instantiated [ampersand-view](https://github.com/ampersandjs/ampersand-view) or Backbone.View, but can be anything that has a `.el` property that represents that view's root element and `.remove()` method that cleans up after itself. In addition if your custom view object has a `.render()` method it will get called before the view is added to the DOM.
 
 
 ## Changelog
