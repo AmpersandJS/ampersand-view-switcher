@@ -50,7 +50,7 @@ ViewSwitcher.prototype._show = function (view, cb) {
 };
 
 ViewSwitcher.prototype._render = function (view) {
-    view.render({containerEl: this.el});
+    if (!view.rendered) view.render({containerEl: this.el});
     this.el.appendChild(view.el);
 };
 
