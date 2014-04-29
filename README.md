@@ -5,7 +5,7 @@ This module does one thing: *it helps you swap out views inside of an element*. 
 What might you do with it?
 - build a page container for your app.
 - build a system for managing display of modals in your single page app.
-- When you want to animate a transition between showing any two views.
+- animate a transition between showing any two views.
 
 What it does
 - Takes an instantiated view and renders it in the container.
@@ -105,6 +105,8 @@ this.pageSwitcher = new ViewSwitcher(this.pageContainer, {
     * `show` {Function} [optional] A function that gets called when a view is being shown. It's passed the new view, the previous view (if relevant), and a callback. If you name 3 incoming arguments for example `function (newView, oldView, callback) { ... }` the view switcher will wait for you to call the callback before it's considered ready. If you only use one or two like this: `function (newView, oldView) { ... }` it won't wait for you to call a callback.
     * `hide` {Function} [optional] A function that gets called when a view is being removed. It's passed the old view, the new view (if relevant), and a callback. If you name 3 incoming arguments for example `function (oldView, newView, callback) { ... }` the view switcher will wait for you to call the callback before it's considered ready. If you only use one or two like this: `function (oldView, newView) { ... }` it won't wait for you to call a callback.
     * `waitForRemove` {Boolean} [default: `false`] Whether or not to wait until your `hide` animation callback gets called before starting your `show` animation.
+    * `empty` {Function} [optional] A function that gets called any time the view switcher is empty. Including when you instantiate it without giving it a view to start with.
+    * `view` {View} [optional] A view instance to start with.
 
 
 #### Method: .set(viewInstance)
@@ -115,9 +117,14 @@ The instantiated view switcher has this one main method. Simply call it with the
 
 This is most likely going to be an instantiated [ampersand-view](https://github.com/ampersandjs/ampersand-view) or Backbone.View, but can be anything that has a `.el` property that represents that view's root element and `.remove()` method that cleans up after itself. In addition if your custom view object has a `.render()` method it will get called before the view is added to the DOM.
 
+#### Method: .clear(callback)
+
+* `callback` {Function} [optional] An optional callback when removed. Useful if you're doing custom animations.
+
 
 ## Changelog
 
+- 0.3.0 Adding empty callback, initial view option.
 - 0.0.1 Initial version (prototype stage, beware)
 
 ## Credits

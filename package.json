@@ -9,7 +9,7 @@
   "devDependencies": {
     "tape": "2.x.x",
     "precommit-hook": "0.x.x",
-    "ampersand-view": "",
+    "ampersand-view": "^4.2.1",
     "run-browser": ""
   },
   "homepage": "https://github.com/ampersandjs/ampersand-view-switcher",
@@ -29,6 +29,7 @@
     "start": "run-browser test/main.js"
   },
   "dependencies": {
-    "precommit-hook": "~0.3.10"
+    "precommit-hook": "~0.3.10",
+    "ampersand-view": "~4.2.1"
   }
 }

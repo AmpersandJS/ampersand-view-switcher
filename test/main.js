@@ -6,7 +6,7 @@ var View = require('ampersand-view');
 var TestView = View.extend({
     template: '<div role="container"></div>',
     render: function () {
-        this.renderAndBind();
+        this.renderWithTemplate();
         this.switcher = new ViewSwitcher(this.getByRole('container'));
     }
 });
@@ -29,4 +29,28 @@ test('basics', function (t) {
     t.end();
 });
 
-
+test('calls `empty` when appropriate', function (t) {
+    var count = 0;
+    var NewView = TestView.extend({
+        render: function () {
+            this.renderWithTemplate();
+            this.switcher = new ViewSwitcher(this.getByRole('container'), {
+                empty: function () {
+                    count++;
+                }
+            });
+        }
+    });
+    var c1 = new ItemView();
+    var c2 = new ItemView();
+    var base = new NewView();
+    base.render();
+    t.equal(count, 1, 'should be called at first');
+    base.switcher.set(c1);
+    base.switcher.clear();
+    t.equal(count, 2, 'should be called when clear is called');
+    base.switcher.set(c2);
+    c2.remove();
+    t.equal(count, 3, 'should be called when view is removed');
+    t.end();
+});

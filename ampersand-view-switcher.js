@@ -4,18 +4,26 @@ function ViewSwitcher(el, options) {
     this.config = {
         hide: null,
         show: null,
+        empty: null,
         waitForRemove: false
     };
     for (var item in options) {
-        this.config[item] = options[item];
+        if (this.config.hasOwnProperty(item)) {
+            this.config[item] = options[item];
+        }
     }
-    this.current = null;
+    if (options.view) {
+        this.set(options.view);
+    } else {
+        // call this so the empty callback gets called
+        this._onViewRemove();
+    }
 }
 
 ViewSwitcher.prototype.set = function (view) {
     var self = this;
     var prev = this.previous = this.current;
-    var current = this.current = view;
+    var current = this._setCurrent(view);
     if (this.config.waitForRemove) {
         this._hide(prev, function () {
             // make sure we're still dealing with the same one
@@ -29,6 +37,25 @@ ViewSwitcher.prototype.set = function (view) {
         this._hide(prev);
         this._show(current);
     }
+};
+
+ViewSwitcher.prototype._setCurrent = function (view) {
+    this.current = view;
+    if (view) this._registerRemoveListener(view);
+    var emptyCb = this.config.empty;
+    if (emptyCb && !this.current) {
+        emptyCb();
+    }
+    return view;
+};
+
+ViewSwitcher.prototype.clear = function (cb) {
+    this._hide(this.current, cb);
+};
+
+// If the view switcher itself is removed, remove its child to avoid memory leaks
+ViewSwitcher.prototype.remove = function () {
+    if (this.current) this.current.remove();
 };
 
 ViewSwitcher.prototype._show = function (view, cb) {
@@ -49,14 +76,28 @@ ViewSwitcher.prototype._show = function (view, cb) {
     }
 };
 
+ViewSwitcher.prototype._registerRemoveListener = function (view) {
+    if (view) view.once('remove', this._onViewRemove, this);
+};
+
+ViewSwitcher.prototype._onViewRemove = function (view) {
+    var emptyCb = this.config.empty;
+    if (this.current === view) {
+        this.current = null;
+    }
+    if (emptyCb && !this.current) {
+        emptyCb();
+    }
+};
+
 ViewSwitcher.prototype._render = function (view) {
     if (!view.rendered) view.render({containerEl: this.el});
     this.el.appendChild(view.el);
 };
 
 ViewSwitcher.prototype._hide = function (view, cb) {
-    var customHide = this.config.hide;
     if (!view) return cb && cb();
+    var customHide = this.config.hide;
     if (customHide) {
         // async
         if (customHide.length === 3) {
