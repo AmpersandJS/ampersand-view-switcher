@@ -7,10 +7,12 @@
     "url": "https://github.com/ampersandjs/ampersand-view-switcher/issues"
   },
   "devDependencies": {
-    "tape": "2.x.x",
-    "precommit-hook": "0.x.x",
     "ampersand-view": "^4.2.1",
-    "run-browser": ""
+    "precommit-hook": "0.x.x",
+    "run-browser": "",
+    "tap-spec": "^0.2.0",
+    "tape": "2.x.x",
+    "tape-run": "^0.1.1"
   },
   "homepage": "https://github.com/ampersandjs/ampersand-view-switcher",
   "keywords": [
@@ -26,7 +28,8 @@
     "url": "git://github.com/ampersandjs/ampersand-view-switcher"
   },
   "scripts": {
-    "start": "run-browser test/main.js"
+    "start": "run-browser test/*",
+    "test": "browserify test/* | tape-run | tap-spec"
   },
   "dependencies": {
     "precommit-hook": "~0.3.10",
