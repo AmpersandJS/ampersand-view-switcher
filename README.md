@@ -1,4 +1,4 @@
-# ampersand-view-switcher
+# Ampersand View Switcher
 
 This module does one thing: *it helps you swap out views inside of an element*. It's compatible with ampersand-view, backbone views and any view that has an `.el`, `.render` and `.remove()`
 
@@ -19,13 +19,13 @@ What it does
     - Beyond this, they could be any object.
 - IT DOES VERY LITTLE ELSE (and *that* is a feature)
 
-## installing
+## Install
 
 ```
 npm install ampersand-view-switcher
 ```
 
-## example usage
+## Example
 
 Here's an example of how you might use the view switcher to handle page views within your ampersand app.
 
@@ -98,7 +98,7 @@ this.pageSwitcher = new ViewSwitcher(this.pageContainer, {
 
 ## API Reference
 
-### Class: ViewSwitcher(element, [options])
+### constructor `new ViewSwitcher(element, [options])`
 
 * `element` {Element} The DOM element that should contain the views.
 * `options` {Object} [optinal]
@@ -108,24 +108,52 @@ this.pageSwitcher = new ViewSwitcher(this.pageContainer, {
     * `empty` {Function} [optional] A function that gets called any time the view switcher is empty. Including when you instantiate it without giving it a view to start with.
     * `view` {View} [optional] A view instance to start with.
 
+```javascript
+var switcher = new ViewSwitcher(document.querySelector('#pageContainer'));
 
-#### Method: .set(viewInstance)
+var view = new MyView({ model: model });
 
-* `viewInstance` {View} The new view to render. 
+switcher.set(view);
+```
 
-The instantiated view switcher has this one main method. Simply call it with the new view you wish to show. 
+### set `switcher.set(viewInstance)`
+
+* `viewInstance` {View} The new view to render.
+
+The instantiated view switcher has this one main method. Simply call it with the new view you wish to show.
 
 This is most likely going to be an instantiated [ampersand-view](https://github.com/ampersandjs/ampersand-view) or Backbone.View, but can be anything that has a `.el` property that represents that view's root element and `.remove()` method that cleans up after itself. In addition if your custom view object has a `.render()` method it will get called before the view is added to the DOM.
 
-#### Method: .clear(callback)
+```javascript
+var switcher = new ViewSwitcher(document.querySelector('#pageContainer'));
+
+var view = new MyView({ model: model });
+
+switcher.set(view);
+```
+
+### clear `switcher.clear(callback)`
 
 * `callback` {Function} [optional] An optional callback when removed. Useful if you're doing custom animations.
 
+Removes the current view from the view switcher. Calls `callback` when done if one was provided.`
+
+```javascript
+var switcher = new ViewSwitcher(document.querySelector('#pageContainer'));
+
+var view = new MyView({ model: model });
+
+switcher.set(view);
+
+switcher.clear();
+```
 
 ## Changelog
 
 - 0.3.0 Adding empty callback, initial view option.
 - 0.0.1 Initial version (prototype stage, beware)
+
+<!-- starthide -->
 
 ## Credits
 
@@ -135,3 +163,5 @@ Written by [@HenrikJoreteg](http://twitter.com/henrikjoreteg) with inspiration a
 ## License
 
 MIT
+
+<!-- endhide -->
