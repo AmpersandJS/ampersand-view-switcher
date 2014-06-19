@@ -1,4 +1,4 @@
-# Ampersand View Switcher
+# ampersand-view-switcher
 
 This module does one thing: *it helps you swap out views inside of an element*. It's compatible with ampersand-view, backbone views and any view that has an `.el`, `.render` and `.remove()`
 
