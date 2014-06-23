@@ -6,6 +6,10 @@
   "bugs": {
     "url": "https://github.com/ampersandjs/ampersand-view-switcher/issues"
   },
+  "dependencies": {
+    "ampersand-view": "~4.2.1",
+    "precommit-hook": "~0.3.10"
+  },
   "devDependencies": {
     "ampersand-view": "^4.2.1",
     "precommit-hook": "0.x.x",
@@ -30,9 +34,5 @@
   "scripts": {
     "start": "run-browser test/*",
     "test": "browserify test/* | tape-run | tap-spec"
-  },
-  "dependencies": {
-    "precommit-hook": "~0.3.10",
-    "ampersand-view": "~4.2.1"
   }
 }
