@@ -7,8 +7,7 @@
     "url": "https://github.com/ampersandjs/ampersand-view-switcher/issues"
   },
   "dependencies": {
-    "ampersand-view": "~4.2.1",
-    "precommit-hook": "~0.3.10"
+    "ampersand-view": "~4.2.1"
   },
   "devDependencies": {
     "ampersand-view": "^4.2.1",
