@@ -32,11 +32,11 @@ Here's an example of how you might use the view switcher to handle page views wi
 `mainview.js`
 
 ```js
-var HumanView = require('ampersand-view');
+var AmpersandView = require('ampersand-view');
 var ViewSwitcher = require('ampersand-view-switcher');
 var templates = require('./templates');
 
-module.exports = HumanView.extend({
+module.exports = AmpersandView.extend({
     template: templates.body,
     render: function () {
         // render our template
