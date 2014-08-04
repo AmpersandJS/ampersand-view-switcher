@@ -1,6 +1,6 @@
 # ampersand-view-switcher
 
-This module does one thing: *it helps you swap out views inside of an element*. It's compatible with ampersand-view, backbone views and any view that has an `.el`, `.render` and `.remove()`
+This module does one thing: *it helps you swap out views inside of an element*. It's compatible with ampersand-view, backbone views and any view that has an `.el`, `.render()` and `.remove()`
 
 What might you do with it?
 - build a page container for your app.
@@ -49,14 +49,14 @@ module.exports = AmpersandView.extend({
         this.pageSwitcher = new ViewSwitcher(this.pageContainer, {
             // here we provide a few things we'd like to do each time
             // we switch pages in the app.
-            show: function (newView, oldView) {
+            show: function (view) {
                 // set our document title
-                document.title = newView.pageTitle || 'my awesome app';
+                document.title = view.pageTitle || 'my awesome app';
                 // scroll to the top
                 document.body.scrollTop = 0;
                 // perhaps store a reference to our current page on our
                 // app global for easy access from the browser console.
-                app.currentPage = newView;
+                app.currentPage = view;
             }
         });
     } 
@@ -81,16 +81,15 @@ this.pageSwitcher = new ViewSwitcher(this.pageContainer, {
     },
     // here we provide a few things we'd like to do each time
     // we switch pages in the app.
-    show: function (newView, oldView, cb) {
+    show: function (view) {
         // it's inserted and rendered for me
-        document.title = newView.pageTitle || 'app name';
+        document.title = view.pageTitle || 'app name';
         document.body.scrollTop = 0;
 
         // store an additional reference, just because
-        app.currentPage = newView;
+        app.currentPage = view;
 
-        newView.el.classList.add('animateIn');
-        setTimeout(cb, 2000)
+        view.el.classList.add('animateIn');
     }
 });
 ```
@@ -102,7 +101,7 @@ this.pageSwitcher = new ViewSwitcher(this.pageContainer, {
 
 * `element` {Element} The DOM element that should contain the views.
 * `options` {Object} [optinal]
-    * `show` {Function} [optional] A function that gets called when a view is being shown. It's passed the new view, the previous view (if relevant), and a callback. If you name 3 incoming arguments for example `function (newView, oldView, callback) { ... }` the view switcher will wait for you to call the callback before it's considered ready. If you only use one or two like this: `function (newView, oldView) { ... }` it won't wait for you to call a callback.
+    * `show` {Function} [optional] A function that gets called when a view is being shown. It's passed the new view.
     * `hide` {Function} [optional] A function that gets called when a view is being removed. It's passed the old view, the new view (if relevant), and a callback. If you name 3 incoming arguments for example `function (oldView, newView, callback) { ... }` the view switcher will wait for you to call the callback before it's considered ready. If you only use one or two like this: `function (oldView, newView) { ... }` it won't wait for you to call a callback.
     * `waitForRemove` {Boolean} [default: `false`] Whether or not to wait until your `hide` animation callback gets called before starting your `show` animation.
     * `empty` {Function} [optional] A function that gets called any time the view switcher is empty. Including when you instantiate it without giving it a view to start with.
