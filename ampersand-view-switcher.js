@@ -58,22 +58,11 @@ ViewSwitcher.prototype.remove = function () {
     if (this.current) this.current.remove();
 };
 
-ViewSwitcher.prototype._show = function (view, cb) {
+ViewSwitcher.prototype._show = function (view) {
     var customShow = this.config.show;
-    if (customShow) {
-        // async
-        if (customShow.length === 3) {
-            this._render(view);
-            customShow(view, cb);
-        } else {
-            this._render(view);
-            customShow(view);
-            if (cb) cb();
-        }
-    } else {
-        this._render(view);
-        if (cb) cb();
-    }
+
+    this._render(view);
+    if (customShow) customShow(view);
 };
 
 ViewSwitcher.prototype._registerRemoveListener = function (view) {
