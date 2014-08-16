@@ -72,7 +72,7 @@ this.pageSwitcher = new ViewSwitcher(this.pageContainer, {
     waitForRemove: true,
     // here we provide a few things to do before the element gets
     // removed from the DOM.
-    hide: function (oldView, newView, cb) {
+    hide: function (oldView, cb) {
         // it's inserted and rendered for me so we'll add a class 
         // that has a corresponding CSS transition.
         oldView.el.classList.add('animateOut');
@@ -81,15 +81,15 @@ this.pageSwitcher = new ViewSwitcher(this.pageContainer, {
     },
     // here we provide a few things we'd like to do each time
     // we switch pages in the app.
-    show: function (view) {
+    show: function (newView) {
         // it's inserted and rendered for me
-        document.title = view.pageTitle || 'app name';
+        document.title = newView.pageTitle || 'app name';
         document.body.scrollTop = 0;
 
         // store an additional reference, just because
-        app.currentPage = view;
+        app.currentPage = newView;
 
-        view.el.classList.add('animateIn');
+        newView.el.classList.add('animateIn');
     }
 });
 ```
@@ -102,7 +102,7 @@ this.pageSwitcher = new ViewSwitcher(this.pageContainer, {
 * `element` {Element} The DOM element that should contain the views.
 * `options` {Object} [optinal]
     * `show` {Function} [optional] A function that gets called when a view is being shown. It's passed the new view.
-    * `hide` {Function} [optional] A function that gets called when a view is being removed. It's passed the old view, the new view (if relevant), and a callback. If you name 3 incoming arguments for example `function (oldView, newView, callback) { ... }` the view switcher will wait for you to call the callback before it's considered ready. If you only use one or two like this: `function (oldView, newView) { ... }` it won't wait for you to call a callback.
+    * `hide` {Function} [optional] A function that gets called when a view is being removed. It's passed the old view and a callback. If you name 2 incoming arguments for example `function (oldView, callback) { ... }` the view switcher will wait for you to call the callback before it's considered ready. If you only use one like this: `function (oldView) { ... }` it won't wait for you to call a callback.
     * `waitForRemove` {Boolean} [default: `false`] Whether or not to wait until your `hide` animation callback gets called before starting your `show` animation.
     * `empty` {Function} [optional] A function that gets called any time the view switcher is empty. Including when you instantiate it without giving it a view to start with.
     * `view` {View} [optional] A view instance to start with.

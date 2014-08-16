@@ -14,7 +14,8 @@ function ViewSwitcher(el, options) {
         }
     }
     if (options.view) {
-        this.set(options.view);
+        this._setCurrent(options.view);
+        this._render(options.view);
     } else {
         // call this so the empty callback gets called
         this._onViewRemove();
@@ -24,19 +25,18 @@ function ViewSwitcher(el, options) {
 ViewSwitcher.prototype.set = function (view) {
     var self = this;
     var prev = this.previous = this.current;
-    var current = this._setCurrent(view);
+
+    if (prev === view) {
+        return;
+    }
+
     if (this.config.waitForRemove) {
         this._hide(prev, function () {
-            // make sure we're still dealing with the same one
-            // that way if we're navigating quickly we don't start
-            // to show one that's already old.
-            if (prev === self.previous && current === self.current) {
-                self._show(current);
-            }
+            self._show(view);
         });
     } else {
         this._hide(prev);
-        this._show(current);
+        this._show(view);
     }
 };
 
@@ -61,7 +61,7 @@ ViewSwitcher.prototype.remove = function () {
 
 ViewSwitcher.prototype._show = function (view) {
     var customShow = this.config.show;
-
+    this._setCurrent(view);
     this._render(view);
     if (customShow) customShow(view);
 };
@@ -86,17 +86,16 @@ ViewSwitcher.prototype._render = function (view) {
 };
 
 ViewSwitcher.prototype._hide = function (view, cb) {
-    if (!view) return cb && cb();
     var customHide = this.config.hide;
+    if (!view) return cb && cb();
     if (customHide) {
-        // async
-        if (customHide.length === 3) {
-            customHide(view, this.current, function () {
+        if (customHide.length === 2) {
+            customHide(view, function () {
                 view.remove();
                 if (cb) cb();
             });
         } else {
-            customHide(view, this.current);
+            customHide(view);
             view.remove();
             if (cb) cb();
         }

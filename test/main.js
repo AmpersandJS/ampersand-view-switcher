@@ -59,7 +59,6 @@ test('self inserting views can be set without throwing exceptions', function (t)
     var Base = makeTestView();
     var base = new Base();
     var v1 = new SelfInsertingView();
-    console.log(base);
     base.render();
     t.doesNotThrow(function() {
         base.switcher.set(v1);
@@ -68,11 +67,10 @@ test('self inserting views can be set without throwing exceptions', function (t)
 });
 
 test('`options.hide', function(t) {
-    t.plan(4);
+    t.plan(3);
     var TestView = makeTestView({
-        hide: function(oldView, newView) {
+        hide: function(oldView) {
             t.equal(oldView, c1, 'first param should be previous view');
-            t.equal(newView, c2, 'second param should be current view');
         }
     });
     var base = new TestView();
@@ -85,13 +83,12 @@ test('`options.hide', function(t) {
 });
 
 test('`option.hide` with `waitForRemove`', function(t) {
-    t.plan(5);
+    t.plan(4);
     var TestView = makeTestView({
         waitForRemove: true,
-        hide: function(oldView, newView, cb) {
+        hide: function(oldView, cb) {
             t.equal(oldView, c1, 'first param should be previous view');
-            t.equal(newView, c2, 'second param should be current view');
-            t.ok(typeof cb === 'function', "third param is callback");
+            t.ok(typeof cb === 'function', 'second param is callback');
             cb();
         }
     });
