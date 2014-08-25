@@ -56,7 +56,7 @@ module.exports = AmpersandView.extend({
                 document.body.scrollTop = 0;
                 // perhaps store a reference to our current page on our
                 // app global for easy access from the browser console.
-                app.currentPage = view;
+                app.currentPage = newView;
             }
         });
     } 
@@ -75,13 +75,13 @@ this.pageSwitcher = new ViewSwitcher(this.pageContainer, {
     hide: function (oldView, newView, cb) {
         // it's inserted and rendered for me so we'll add a class 
         // that has a corresponding CSS transition.
-        view.el.classList.add('animateOut');
+        oldView.el.classList.add('animateOut');
         // give it time to finish (yes there are other ways to do this)
         setTimeout(cb, 1000);
     },
     // here we provide a few things we'd like to do each time
     // we switch pages in the app.
-    show: function (view, oldView) {
+    show: function (newView, oldView) {
         // it's inserted and rendered for me
         document.title = newView.pageTitle || 'app name';
         document.body.scrollTop = 0;
@@ -89,7 +89,7 @@ this.pageSwitcher = new ViewSwitcher(this.pageContainer, {
         // store an additional reference, just because
         app.currentPage = newView;
 
-        view.el.classList.add('animateIn');
+        newView.el.classList.add('animateIn');
         setTimeout(cb, 2000)
     }
 });
