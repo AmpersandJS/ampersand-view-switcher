@@ -42,8 +42,8 @@ module.exports = AmpersandView.extend({
         // render our template
         this.renderAndBind();
 
-        // grab the element without our template based on its "role" attribute
-        this.pageContainer = this.getByRole('page-container');
+        // grab the element without our template based on its "data-hook" attribute
+        this.pageContainer = this.queryByHook('page-container');
 
         // set up our page switcher for that element
         this.pageSwitcher = new ViewSwitcher(this.pageContainer, {

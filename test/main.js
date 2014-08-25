@@ -4,10 +4,10 @@ var View = require('ampersand-view');
 
 
 var TestView = View.extend({
-    template: '<div role="container"></div>',
+    template: '<div data-hook="container"></div>',
     render: function () {
         this.renderWithTemplate();
-        this.switcher = new ViewSwitcher(this.getByRole('container'));
+        this.switcher = new ViewSwitcher(this.queryByHook('container'));
     }
 });
 
@@ -34,7 +34,7 @@ test('calls `empty` when appropriate', function (t) {
     var NewView = TestView.extend({
         render: function () {
             this.renderWithTemplate();
-            this.switcher = new ViewSwitcher(this.getByRole('container'), {
+            this.switcher = new ViewSwitcher(this.queryByHook('container'), {
                 empty: function () {
                     count++;
                 }
