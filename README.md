@@ -40,7 +40,7 @@ module.exports = AmpersandView.extend({
     template: templates.body,
     render: function () {
         // render our template
-        this.renderAndBind();
+        this.renderWithTemplate();
 
         // grab the element without our template based on its "data-hook" attribute
         this.pageContainer = this.queryByHook('page-container');
