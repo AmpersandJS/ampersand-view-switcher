@@ -9,6 +9,7 @@
   "devDependencies": {
     "ampersand-view": "^7.0.1",
     "browserify": "^5.10.1",
+    "phantomjs": "^1.9.7-15",
     "precommit-hook": "0.x.x",
     "run-browser": "",
     "tap-spec": "^0.2.0",
