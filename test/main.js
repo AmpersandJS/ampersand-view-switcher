@@ -67,3 +67,24 @@ test('`options.hide', function(t) {
     t.equal(c1.el.parentNode, null, 'the previous view was removed');
     t.equal(base.el.firstChild, c2.el, 'the current view was set');
 });
+
+test('`option.hide` with `waitForRemove`', function(t) {
+    t.plan(5);
+    var TestView = makeTestView({
+        waitForRemove: true,
+        hide: function(oldView, newView, cb) {
+            t.equal(oldView, c1, 'first param should be previous view');
+            t.equal(newView, c2, 'second param should be current view');
+            t.ok(typeof cb === 'function', "third param is callback");
+            cb();
+        }
+    });
+    var base = new TestView();
+    var c1 = new ItemView();
+    var c2 = new ItemView();
+    base.render();
+    base.switcher.set(c1);
+    base.switcher.set(c2);
+    t.equal(c1.el.parentNode, null, 'the previous view was removed');
+    t.equal(base.el.firstChild, c2.el, 'the current view was set');
+});
