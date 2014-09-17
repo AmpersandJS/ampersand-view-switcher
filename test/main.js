@@ -5,6 +5,7 @@ var View = require('ampersand-view');
 var makeTestView = function(options) {
     return View.extend({
         template: '<div data-hook="container"></div>',
+        autoRender: true,
         render: function () {
             this.renderWithTemplate();
             this.switcher = new ViewSwitcher(this.queryByHook('container'), options);
@@ -22,7 +23,6 @@ test('basics', function (t) {
     var base = new Base();
     var c1 = new ItemView();
     var c2 = new ItemView();
-    base.render();
     t.ok(base.el);
     base.switcher.set(c1);
     t.equal(base.el.firstChild, c1.el);
@@ -39,7 +39,6 @@ test('calls `empty` when appropriate', function (t) {
     var c1 = new ItemView();
     var c2 = new ItemView();
     var base = new NewView();
-    base.render();
     t.equal(count, 1, 'should be called at first');
     base.switcher.set(c1);
     base.switcher.clear();
@@ -61,7 +60,6 @@ test('`options.hide', function(t) {
     var base = new TestView();
     var c1 = new ItemView();
     var c2 = new ItemView();
-    base.render();
     base.switcher.set(c1);
     base.switcher.set(c2);
     t.equal(c1.el.parentNode, null, 'the previous view was removed');
@@ -82,7 +80,6 @@ test('`option.hide` with `waitForRemove`', function(t) {
     var base = new TestView();
     var c1 = new ItemView();
     var c2 = new ItemView();
-    base.render();
     base.switcher.set(c1);
     base.switcher.set(c2);
     t.equal(c1.el.parentNode, null, 'the previous view was removed');
