@@ -2,14 +2,15 @@ var test = require('tape');
 var ViewSwitcher = require('../ampersand-view-switcher');
 var View = require('ampersand-view');
 
-
-var TestView = View.extend({
-    template: '<div data-hook="container"></div>',
-    render: function () {
-        this.renderWithTemplate();
-        this.switcher = new ViewSwitcher(this.queryByHook('container'));
-    }
-});
+var makeTestView = function(options) {
+    return View.extend({
+        template: '<div data-hook="container"></div>',
+        render: function () {
+            this.renderWithTemplate();
+            this.switcher = new ViewSwitcher(this.queryByHook('container'), options);
+        }
+    });
+};
 
 var ItemView = View.extend({
     template: '<a>hey</a>',
@@ -17,7 +18,8 @@ var ItemView = View.extend({
 });
 
 test('basics', function (t) {
-    var base = new TestView();
+    var Base = makeTestView();
+    var base = new Base();
     var c1 = new ItemView();
     var c2 = new ItemView();
     base.render();
@@ -31,15 +33,8 @@ test('basics', function (t) {
 
 test('calls `empty` when appropriate', function (t) {
     var count = 0;
-    var NewView = TestView.extend({
-        render: function () {
-            this.renderWithTemplate();
-            this.switcher = new ViewSwitcher(this.queryByHook('container'), {
-                empty: function () {
-                    count++;
-                }
-            });
-        }
+    var NewView = makeTestView({
+        empty: function () { count++; }
     });
     var c1 = new ItemView();
     var c2 = new ItemView();
