@@ -16,6 +16,11 @@ var ItemView = View.extend({
     autoRender: true
 });
 
+var SelfInsertingView = View.extend({
+    insertSelf: true,
+    render: function () {}
+});
+
 test('basics', function (t) {
     var base = new TestView();
     var c1 = new ItemView();
@@ -52,5 +57,15 @@ test('calls `empty` when appropriate', function (t) {
     base.switcher.set(c2);
     c2.remove();
     t.equal(count, 3, 'should be called when view is removed');
+    t.end();
+});
+
+test('self inserting views can be set without throwing exceptions', function (t) {
+    var base = new TestView();
+    var v1 = new SelfInsertingView();
+    base.render();
+    t.doesNotThrow(function() {
+        base.switcher.set(v1);
+    });
     t.end();
 });
