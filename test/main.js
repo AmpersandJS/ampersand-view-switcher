@@ -49,3 +49,21 @@ test('calls `empty` when appropriate', function (t) {
     t.equal(count, 3, 'should be called when view is removed');
     t.end();
 });
+
+test('`options.hide', function(t) {
+    t.plan(4);
+    var TestView = makeTestView({
+        hide: function(oldView, newView) {
+            t.equal(oldView, c1, 'first param should be previous view');
+            t.equal(newView, c2, 'second param should be current view');
+        }
+    });
+    var base = new TestView();
+    var c1 = new ItemView();
+    var c2 = new ItemView();
+    base.render();
+    base.switcher.set(c1);
+    base.switcher.set(c2);
+    t.equal(c1.el.parentNode, null, 'the previous view was removed');
+    t.equal(base.el.firstChild, c2.el, 'the current view was set');
+});
