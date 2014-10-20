@@ -92,7 +92,7 @@ ViewSwitcher.prototype._onViewRemove = function (view) {
 
 ViewSwitcher.prototype._render = function (view) {
     if (!view.rendered) view.render({containerEl: this.el});
-    this.el.appendChild(view.el);
+    if (!view.insertSelf) this.el.appendChild(view.el);
 };
 
 ViewSwitcher.prototype._hide = function (view, cb) {
