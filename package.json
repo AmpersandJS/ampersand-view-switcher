@@ -8,13 +8,13 @@
   },
   "devDependencies": {
     "ampersand-view": "^7.0.1",
-    "browserify": "^5.10.1",
-    "phantomjs": "^1.9.7-15",
-    "precommit-hook": "0.x.x",
+    "browserify": "^6.2.0",
+    "phantomjs": "^1.9.12",
+    "precommit-hook": "^1.0.7",
     "run-browser": "",
-    "tap-spec": "^0.2.0",
-    "tape": "2.x.x",
-    "tape-run": "^0.1.1"
+    "tap-spec": "^1.0.1",
+    "tape": "^2.0.0",
+    "tape-run": "^0.3.0"
   },
   "homepage": "https://github.com/ampersandjs/ampersand-view-switcher",
   "keywords": [
