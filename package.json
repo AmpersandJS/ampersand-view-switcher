@@ -3,8 +3,16 @@
   "description": "A utility for swapping out views inside a container element.",
   "version": "1.1.0",
   "author": "Henrik Joreteg <henrik@andyet.net>",
+  "browserify": {
+    "transform": [
+      "ampersand-version"
+    ]
+  },
   "bugs": {
     "url": "https://github.com/ampersandjs/ampersand-view-switcher/issues"
+  },
+  "dependencies": {
+    "ampersand-version": "^1.0.0"
   },
   "devDependencies": {
     "ampersand-view": "^7.0.1",

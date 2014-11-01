@@ -1,3 +1,4 @@
+/*$AMPERSAND_VERSION*/
 function ViewSwitcher(el, options) {
     options || (options = {});
     this.el = el;
