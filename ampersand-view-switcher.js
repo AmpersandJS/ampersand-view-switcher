@@ -104,6 +104,7 @@ ViewSwitcher.prototype._hide = function (view, cb) {
         if (customHide.length === 3) {
             customHide(view, this.current, function () {
                 view.remove();
+                if (cb) cb();
             });
         } else {
             customHide(view, this.current);
