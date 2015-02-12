@@ -66,10 +66,23 @@ test('self inserting views can be set without throwing exceptions', function (t)
     t.end();
 });
 
-test('`options.hide', function(t) {
-    t.plan(3);
+test('`options.show`', function (t) {
     var TestView = makeTestView({
-        hide: function(oldView) {
+        show: function (newView) {
+            t.equal(newView, c1, 'first param should be new view');
+        }
+    });
+    var base = new TestView();
+    var c1 = new ItemView();
+    base.switcher.set(c1);
+    t.equal(base.el.firstChild, c1.el, 'the current view was set');
+    t.end();
+});
+
+
+test('`options.hide`', function (t) {
+    var TestView = makeTestView({
+        hide: function (oldView) {
             t.equal(oldView, c1, 'first param should be previous view');
         }
     });
@@ -80,13 +93,13 @@ test('`options.hide', function(t) {
     base.switcher.set(c2);
     t.equal(c1.el.parentNode, null, 'the previous view was removed');
     t.equal(base.el.firstChild, c2.el, 'the current view was set');
+    t.end();
 });
 
-test('`option.hide` with `waitForRemove`', function(t) {
-    t.plan(4);
+test('`option.hide` with `waitForRemove`', function (t) {
     var TestView = makeTestView({
         waitForRemove: true,
-        hide: function(oldView, cb) {
+        hide: function (oldView, cb) {
             t.equal(oldView, c1, 'first param should be previous view');
             t.ok(typeof cb === 'function', 'second param is callback');
             cb();
@@ -99,4 +112,29 @@ test('`option.hide` with `waitForRemove`', function(t) {
     base.switcher.set(c2);
     t.equal(c1.el.parentNode, null, 'the previous view was removed');
     t.equal(base.el.firstChild, c2.el, 'the current view was set');
+    t.end();
+});
+
+test('`option.show` and `option.hide` used together', function (t) {
+    var showCount = 0;
+    var hideCount = 0;
+    var TestView = makeTestView({
+        show: function () {
+            showCount++;
+        },
+        hide: function () {
+            hideCount++;
+        }
+    });
+    var base = new TestView();
+    var c1 = new ItemView();
+    var c2 = new ItemView();
+    base.switcher.set(c1);
+    t.equal(base.el.firstChild, c1.el, 'first view was set');
+    base.switcher.set(c2);
+    t.equal(c1.el.parentNode, null, 'first view was removed');
+    t.equal(base.el.firstChild, c2.el, 'second view was set');
+    t.equal(showCount, 2, 'show should be called for every view we set');
+    t.equal(hideCount, 1, 'hide should be called only once, after first view has been set');
+    t.end();
 });
