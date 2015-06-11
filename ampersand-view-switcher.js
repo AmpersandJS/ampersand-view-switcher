@@ -33,8 +33,8 @@ ViewSwitcher.prototype.set = function (view) {
     if (this.config.waitForRemove) {
         this.next = view;
         this._hide(prev, function () {
-            if(self.next===view){
-                self.next = null;
+            if (self.next === view) {
+                delete self.next;
                 self._show(view);
             }
         });
