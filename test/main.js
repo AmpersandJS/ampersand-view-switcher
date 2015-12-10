@@ -79,6 +79,17 @@ test('`options.show`', function (t) {
     t.end();
 });
 
+test('`options.prepend`', function (t) {
+    var TestView = makeTestView({
+        prepend: true
+    });
+    var base = new TestView();
+    var c1 = new ItemView();
+    base.el.appendChild(document.createElement('div'));
+    base.switcher.set(c1);
+    t.equal(c1.el.parentNode.firstChild, c1.el, 'view was prepended to container');
+    t.end();
+});
 
 test('`options.hide`', function (t) {
     var TestView = makeTestView({
