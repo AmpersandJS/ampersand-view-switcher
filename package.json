@@ -17,12 +17,11 @@
   "devDependencies": {
     "ampersand-view": "^7.0.1",
     "browserify": "^6.2.0",
+    "jshint": "^2.9.1",
     "phantomjs": "^1.9.12",
-    "precommit-hook": "^1.0.7",
-    "run-browser": "",
-    "tap-spec": "^1.0.1",
-    "tape": "^2.0.0",
-    "tape-run": "^0.3.0"
+    "precommit-hook": "^3.0.0",
+    "tape": "^4.4.0",
+    "zuul": "^3.9.0"
   },
   "homepage": "https://github.com/ampersandjs/ampersand-view-switcher",
   "keywords": [
@@ -38,7 +37,15 @@
     "url": "git://github.com/ampersandjs/ampersand-view-switcher"
   },
   "scripts": {
-    "start": "run-browser test/*",
-    "test": "browserify test/* | tape-run | tap-spec"
-  }
+    "start": "zuul --local -- test/main.js",
+    "test": "zuul --phantom -- test/main.js",
+    "test-ci": "zuul -- test/main.js",
+    "lint": "jshint .",
+    "validate": "npm ls"
+  },
+  "pre-commit": [
+    "lint",
+    "validate",
+    "test"
+  ]
 }
