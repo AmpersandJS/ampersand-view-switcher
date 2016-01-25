@@ -6,6 +6,7 @@ function ViewSwitcher(el, options) {
         hide: null,
         show: null,
         empty: null,
+        prepend: false,
         waitForRemove: false
     };
     for (var item in options) {
@@ -82,7 +83,13 @@ ViewSwitcher.prototype._onViewRemove = function (view) {
 
 ViewSwitcher.prototype._render = function (view) {
     if (!view.rendered) view.render({containerEl: this.el});
-    if (!view.insertSelf) this.el.appendChild(view.el);
+    if (!view.insertSelf) {
+        if (this.config.prepend) {
+            this.el.insertBefore(view.el, this.el.firstChild);
+        } else {
+            this.el.appendChild(view.el);
+        }
+    }
 };
 
 ViewSwitcher.prototype._hide = function (view, cb) {
