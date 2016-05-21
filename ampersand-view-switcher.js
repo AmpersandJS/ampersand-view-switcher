@@ -72,7 +72,7 @@ ViewSwitcher.prototype._show = function (view) {
 };
 
 ViewSwitcher.prototype._registerRemoveListener = function (view) {
-    if (view) view.once('remove', this._onViewRemove, this);
+    if (view) view.once('remove', this._onViewRemove.bind(this));
 };
 
 ViewSwitcher.prototype._onViewRemove = function (view) {
