@@ -149,3 +149,17 @@ test('`option.show` and `option.hide` used together', function (t) {
     t.equal(hideCount, 1, 'hide should be called only once, after first view has been set');
     t.end();
 });
+
+test('`option.autoRender`', function (t) {
+    var c1 = new ItemView();
+    var TestView = makeTestView({
+        autoRender: false,
+        view: c1
+    });
+    var base = new TestView();
+    t.equal(base.switcher.config.autoRender, false, 'autoRender set to false');
+    t.equal(c1.el.parentNode, null, 'option view was not rendered');
+    base.render();
+    t.equal(base.el.firstChild, c1.el.parentNode, 'option view was rendered');
+    t.end();
+});
