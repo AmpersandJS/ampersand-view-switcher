@@ -16,6 +16,7 @@
   },
   "devDependencies": {
     "ampersand-view": "^9.0.2",
+    "ampersand-view-conventions": "^1.1.8",
     "browserify": "^13.0.0",
     "jshint": "^2.9.1",
     "phantomjs-prebuilt": "^2.1.3",

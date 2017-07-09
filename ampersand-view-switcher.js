@@ -1,7 +1,7 @@
 /*$AMPERSAND_VERSION*/
-function ViewSwitcher(el, options) {
+function ViewSwitcher(options) {
     options || (options = {});
-    this.el = el;
+    this.el = options.el;
     this.config = {
         hide: null,
         show: null,
@@ -15,8 +15,9 @@ function ViewSwitcher(el, options) {
             this.config[item] = options[item];
         }
     }
+    
     this._setCurrent(options.view);
-    if(this.config.autoRender) this.render();
+    if (this.config.autoRender) this.render();
 }
 
 ViewSwitcher.prototype.set = function (view) {
@@ -60,6 +61,8 @@ ViewSwitcher.prototype.clear = function (cb) {
 // If the view switcher itself is removed, remove its child to avoid memory leaks
 ViewSwitcher.prototype.remove = function () {
     if (this.current) this.current.remove();
+    if (this.previous) this.previous.remove();
+    if (this.el && this.el.parentNode) this.el.parentNode.removeChild(this.el);
     return this;
 };
 
@@ -71,7 +74,7 @@ ViewSwitcher.prototype._show = function (view) {
 };
 
 ViewSwitcher.prototype._registerRemoveListener = function (view) {
-    if (view) view.once('remove', this._onViewRemove, this);
+    if (view && view.once) view.once('remove', this._onViewRemove, this);
 };
 
 ViewSwitcher.prototype._onViewRemove = function (view) {
@@ -85,12 +88,14 @@ ViewSwitcher.prototype._onViewRemove = function (view) {
 };
 
 ViewSwitcher.prototype._render = function (view) {
-    if (!view.rendered) view.render({containerEl: this.el});
-    if (!view.insertSelf) {
-        if (this.config.prepend) {
-            this.el.insertBefore(view.el, this.el.firstChild);
-        } else {
-            this.el.appendChild(view.el);
+    if(this.el) {
+        if (!view.rendered) view.render({containerEl: this.el});
+        if (!view.insertSelf) {
+            if (this.config.prepend) {
+                this.el.insertBefore(view.el, this.el.firstChild);
+            } else {
+                this.el.appendChild(view.el);
+            }
         }
     }
 };
