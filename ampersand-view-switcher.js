@@ -88,14 +88,13 @@ ViewSwitcher.prototype._onViewRemove = function (view) {
 };
 
 ViewSwitcher.prototype._render = function (view) {
-    if(this.el) {
-        if (!view.rendered) view.render({containerEl: this.el});
-        if (!view.insertSelf) {
-            if (this.config.prepend) {
-                this.el.insertBefore(view.el, this.el.firstChild);
-            } else {
-                this.el.appendChild(view.el);
-            }
+    if (!this.el) return;
+    if (!view.rendered) view.render({containerEl: this.el});
+    if (!view.insertSelf) {
+        if (this.config.prepend) {
+            this.el.insertBefore(view.el, this.el.firstChild);
+        } else {
+            this.el.appendChild(view.el);
         }
     }
 };
