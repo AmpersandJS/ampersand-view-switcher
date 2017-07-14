@@ -106,7 +106,7 @@ this.pageSwitcher = new ViewSwitcher({
 ### constructor `new ViewSwitcher([options])`
 
 * `options` {Object} [optional]
-    * `element` {Element} The DOM element that should contain the views.
+    * `el` {Element} The DOM element that should contain the views.
     * `show` {Function} [optional] A function that gets called when a view is being shown. It's passed the new view.
     * `hide` {Function} [optional] A function that gets called when a view is being removed. It's passed the old view and a callback. If you name 2 incoming arguments for example `function (oldView, callback) { ... }` the view switcher will wait for you to call the callback before it's considered ready. If you only use one like this: `function (oldView) { ... }` it won't wait for you to call a callback.
     * `waitForRemove` {Boolean} [default: `false`] Whether or not to wait until your `hide` animation callback gets called before starting your `show` animation.
