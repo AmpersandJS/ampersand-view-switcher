@@ -26,7 +26,7 @@ var SelfInsertingView = View.extend({
     render: function () {}
 });
 
-viewCompliance.view(test, ViewSwitcher, { view: new makeTestView()() });
+viewCompliance.view(test, ViewSwitcher, { el: document.createElement("div") });
 
 test('basics', function (t) {
     var Base = makeTestView();
