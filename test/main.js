@@ -1,4 +1,5 @@
 var test = require('tape');
+var viewCompliance = require('ampersand-view-conventions');
 var ViewSwitcher = require('../ampersand-view-switcher');
 var View = require('ampersand-view');
 
@@ -9,7 +10,8 @@ var makeTestView = function(options) {
         autoRender: true,
         render: function () {
             this.renderWithTemplate();
-            this.switcher = new ViewSwitcher(this.queryByHook('container'), options);
+            if (!options.el) options.el = this.queryByHook('container');
+            this.switcher = new ViewSwitcher(options);
         }
     });
 };
@@ -23,6 +25,8 @@ var SelfInsertingView = View.extend({
     insertSelf: true,
     render: function () {}
 });
+
+viewCompliance.view(test, ViewSwitcher, { el: document.createElement("div") });
 
 test('basics', function (t) {
     var Base = makeTestView();
@@ -147,5 +151,31 @@ test('`option.show` and `option.hide` used together', function (t) {
     t.equal(base.el.firstChild, c2.el, 'second view was set');
     t.equal(showCount, 2, 'show should be called for every view we set');
     t.equal(hideCount, 1, 'hide should be called only once, after first view has been set');
+    t.end();
+});
+
+test('`option.autoRender` false`', function (t) {
+    var c1 = new ItemView();
+    var TestView = makeTestView({
+        autoRender: false,
+        view: c1
+    });
+    var base = new TestView();
+    t.equal(base.switcher.config.autoRender, false, 'autoRender set to false');
+    t.equal(c1.el.parentNode, null, 'option view was not rendered');
+    base.switcher.render();
+    t.equal(base.el.firstChild, c1.el, 'option view was rendered');
+    t.end();
+});
+
+test('`option.autoRender` true', function (t) {
+    var c1 = new ItemView();
+    var TestView = makeTestView({
+        autoRender: true,
+        view: c1
+    });
+    var base = new TestView();
+    t.equal(base.switcher.config.autoRender, true, 'autoRender set to true');
+    t.equal(base.switcher.el.firstChild, c1.el, 'option view was rendered');
     t.end();
 });

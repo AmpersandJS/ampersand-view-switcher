@@ -50,7 +50,8 @@ module.exports = AmpersandView.extend({
         this.pageContainer = this.queryByHook('page-container');
 
         // set up our page switcher for that element
-        this.pageSwitcher = new ViewSwitcher(this.pageContainer, {
+        this.pageSwitcher = new ViewSwitcher({
+            el: this.pageContainer, 
             // here we provide a few things we'd like to do each time
             // we switch pages in the app.
             show: function (view) {
@@ -71,7 +72,8 @@ Or if you wanted to animate them you can do it asynchronously like so:
 
 ```js
 // set up our page switcher for that element
-this.pageSwitcher = new ViewSwitcher(this.pageContainer, {
+this.pageSwitcher = new ViewSwitcher({
+    el: this.pageContainer,
     // whether or not to wait for remove to be done before starting show
     waitForRemove: true,
     // here we provide a few things to do before the element gets
@@ -101,10 +103,10 @@ this.pageSwitcher = new ViewSwitcher(this.pageContainer, {
 
 ## API Reference
 
-### constructor `new ViewSwitcher(element, [options])`
+### constructor `new ViewSwitcher([options])`
 
-* `element` {Element} The DOM element that should contain the views.
-* `options` {Object} [optinal]
+* `options` {Object} [optional]
+    * `el` {Element} The DOM element that should contain the views.
     * `show` {Function} [optional] A function that gets called when a view is being shown. It's passed the new view.
     * `hide` {Function} [optional] A function that gets called when a view is being removed. It's passed the old view and a callback. If you name 2 incoming arguments for example `function (oldView, callback) { ... }` the view switcher will wait for you to call the callback before it's considered ready. If you only use one like this: `function (oldView) { ... }` it won't wait for you to call a callback.
     * `waitForRemove` {Boolean} [default: `false`] Whether or not to wait until your `hide` animation callback gets called before starting your `show` animation.
@@ -129,7 +131,7 @@ The instantiated view switcher has this one main method. Simply call it with the
 This is most likely going to be an instantiated [ampersand-view](https://github.com/ampersandjs/ampersand-view) or Backbone.View, but can be anything that has a `.el` property that represents that view's root element and `.remove()` method that cleans up after itself. In addition if your custom view object has a `.render()` method it will get called before the view is added to the DOM.
 
 ```javascript
-var switcher = new ViewSwitcher(document.querySelector('#pageContainer'));
+var switcher = new ViewSwitcher({el: document.querySelector('#pageContainer')});
 
 var view = new MyView({ model: model });
 
@@ -143,7 +145,7 @@ switcher.set(view);
 Removes the current view from the view switcher. Calls `callback` when done if one was provided.`
 
 ```javascript
-var switcher = new ViewSwitcher(document.querySelector('#pageContainer'));
+var switcher = new ViewSwitcher({el: document.querySelector('#pageContainer')});
 
 var view = new MyView({ model: model });
 

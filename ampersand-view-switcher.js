@@ -1,26 +1,23 @@
 /*$AMPERSAND_VERSION*/
-function ViewSwitcher(el, options) {
+function ViewSwitcher(options) {
     options || (options = {});
-    this.el = el;
+    this.el = options.el;
     this.config = {
         hide: null,
         show: null,
         empty: null,
         prepend: false,
-        waitForRemove: false
+        waitForRemove: false,
+        autoRender: true
     };
     for (var item in options) {
         if (this.config.hasOwnProperty(item)) {
             this.config[item] = options[item];
         }
     }
-    if (options.view) {
-        this._setCurrent(options.view);
-        this._render(options.view);
-    } else {
-        // call this so the empty callback gets called
-        this._onViewRemove();
-    }
+    
+    this._setCurrent(options.view);
+    if (this.config.autoRender) this.render();
 }
 
 ViewSwitcher.prototype.set = function (view) {
@@ -43,6 +40,7 @@ ViewSwitcher.prototype.set = function (view) {
         this._hide(prev);
         this._show(view);
     }
+    return this;
 };
 
 ViewSwitcher.prototype._setCurrent = function (view) {
@@ -57,11 +55,15 @@ ViewSwitcher.prototype._setCurrent = function (view) {
 
 ViewSwitcher.prototype.clear = function (cb) {
     this._hide(this.current, cb);
+    return this;
 };
 
 // If the view switcher itself is removed, remove its child to avoid memory leaks
 ViewSwitcher.prototype.remove = function () {
     if (this.current) this.current.remove();
+    if (this.previous) this.previous.remove();
+    if (this.el && this.el.parentNode) this.el.parentNode.removeChild(this.el);
+    return this;
 };
 
 ViewSwitcher.prototype._show = function (view) {
@@ -72,7 +74,7 @@ ViewSwitcher.prototype._show = function (view) {
 };
 
 ViewSwitcher.prototype._registerRemoveListener = function (view) {
-    if (view) view.once('remove', this._onViewRemove, this);
+    if (view && view.once) view.once('remove', this._onViewRemove, this);
 };
 
 ViewSwitcher.prototype._onViewRemove = function (view) {
@@ -86,6 +88,7 @@ ViewSwitcher.prototype._onViewRemove = function (view) {
 };
 
 ViewSwitcher.prototype._render = function (view) {
+    if (!this.el) return;
     if (!view.rendered) view.render({containerEl: this.el});
     if (!view.insertSelf) {
         if (this.config.prepend) {
@@ -94,6 +97,15 @@ ViewSwitcher.prototype._render = function (view) {
             this.el.appendChild(view.el);
         }
     }
+};
+
+ViewSwitcher.prototype.render = function () {
+    if (this.current && !this._rendered) {
+        this._render(this.current);
+    }
+    //set rendered, el exists even if a current view was not inserted/appended
+    this._rendered = true;
+    return this;
 };
 
 ViewSwitcher.prototype._hide = function (view, cb) {
