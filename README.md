@@ -156,6 +156,7 @@ switcher.clear();
 
 ## Changelog
 
+- 3.0.0 Changed arguments from `ViewSwitcher(el, opts)` to just `ViewSwitcher(opts)` where `el` is now a property inside `opts`.
 - 0.3.0 Adding empty callback, initial view option.
 - 0.0.1 Initial version (prototype stage, beware)
 
